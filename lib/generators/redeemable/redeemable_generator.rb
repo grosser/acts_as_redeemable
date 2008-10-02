@@ -13,7 +13,7 @@ class RedeemableGenerator < Rails::Generator::NamedBase #:nodoc:
       end
       
       m.template "test/fixtures/model.yml", "test/fixtures/#{table_name}.yml"
-      m.template "test/unit/model_test.rb", "test/unit/#{file_name}.rb"
+      m.template "test/unit/model_test.rb", "test/unit/#{file_name}_test.rb"
       
     end
   end
