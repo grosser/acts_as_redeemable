@@ -13,6 +13,12 @@ class ActsAsRedeemableTest < Test::Unit::TestCase
     @coupon = FreeTodayCoupon.create(:user_id => 1)  
   end
   
+  def many_codes(num=100)
+    codes = []
+    num.times {codes << FreeTodayCoupon.generate_code}
+    codes
+  end
+  
   #CODE
   def test_code_has_correct_length
     assert_equal 6, FreeTodayCoupon.generate_unique_code.length
@@ -20,16 +26,17 @@ class ActsAsRedeemableTest < Test::Unit::TestCase
   end
   
   def test_code_does_not_contain_0_or_O
-    codes = []
-    100.times {codes << FreeTodayCoupon.generate_code}
+    codes = many_codes
     assert_equal nil, codes.detect {|c|c.include?('0')}
     assert_equal nil, codes.detect {|c|c.include?('O')}
   end
   
+  def test_code_is_not_insulting
+    
+  end
+  
   def test_code_is_random
-    codes = []
-    100.times {codes << FreeTodayCoupon.generate_code}
-    assert_equal 100, codes.uniq.size
+    assert_equal 100, many_codes(100).uniq.size
   end
   
   #REDEEM
