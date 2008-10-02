@@ -6,10 +6,8 @@ ActiveRecord::Schema.define(:version => 1) do
     t.column :code, :string
     
     t.column :created_at, :datetime
+    t.column :expires_at, :datetime
     t.column :redeemed_at, :datetime
     t.column :redeemed_by_id, :integer
-
   end
-
-
 end

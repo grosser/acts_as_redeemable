@@ -83,13 +83,13 @@ module Squeejee  #:nodoc:
 
         # Returns whether or not the redeemable has expired
         def expired?
-          self.expires_on? and self.expires_on < Time.now
+          self.expires_at and self.expires_at < Time.now
         end
 
         def setup_new #:nodoc:
           self.code = self.class.generate_unique_code
-          unless self.class.valid_for.nil? or self.expires_on?
-            self.expires_on = self.created_at + self.class.valid_for
+          unless self.class.valid_for.nil? or self.expires_at?
+            self.expires_at = self.created_at + self.class.valid_for
           end
         end
         
