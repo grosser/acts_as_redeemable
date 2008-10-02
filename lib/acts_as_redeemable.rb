@@ -71,9 +71,9 @@ module Squeejee  #:nodoc:
         # * +redeemed_by_id+ - id of redeeming user
         def redeem!(redeemed_by_id)
           unless self.redeemed? or self.expired?
-            self.update_attributes({:redeemed_by_id => redeemed_by_id, :recipient_id => redeemed_by_id, :redeemed_at => Time.now}) 
+            self.update_attributes({:redeemed_by_id => redeemed_by_id, :redeemed_at => Time.now}) 
             self.after_redeem
-	   end
+          end
         end
 
         # Returns whether or not the redeemable has been redeemed
