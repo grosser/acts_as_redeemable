@@ -24,7 +24,7 @@ c = Coupon.new
 c.user_id = 1 # The user who created the coupon 
 c.save
 c.code 
-# "4D9110A3"
+# "4DXy9iA3"
 c.created_at  
 # Fri Feb 15 14:56:37 -0600 2008
 c.expires_at 

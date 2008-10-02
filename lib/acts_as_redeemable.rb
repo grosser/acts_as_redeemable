@@ -20,7 +20,7 @@ module Squeejee  #:nodoc:
       #   c.save
       #   c.code 
       #       
-      #   # "4D9110A3"
+      #   # "4d91e0dD"
       module ClassMethods
         # Configuration options are:
         #
@@ -40,9 +40,19 @@ module Squeejee  #:nodoc:
           # Generates an alphanumeric code using an MD5 hash
           # * +code_length+ - number of characters to return
           def generate_code(code_length=6)
-            chars = ("a".."z").to_a + ("1".."9").to_a 
-            new_code = Array.new(code_length, '').collect{chars[rand(chars.size)]}.join
-            Digest::MD5.hexdigest(new_code)[0..(code_length-1)].upcase
+            numbers = ("1".."9").to_a
+            chars = ("a".."z").to_a + ("A".."Z").to_a + numbers 
+            chars.delete 'O'
+            
+            code = ''
+            1.upto(code_length) do |i|
+              if code =~ /[a-zA-Z]{3}$/#do not add 4-letter-words
+                code << numbers.rand
+              else
+                code << chars.rand
+              end
+            end
+            code
           end
 
           # Generates unique code based on +generate_code+ method

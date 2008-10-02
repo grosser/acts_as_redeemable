@@ -32,7 +32,8 @@ class ActsAsRedeemableTest < Test::Unit::TestCase
   end
   
   def test_code_is_not_insulting
-    
+    #hi mr dickson, your coupon code is SUCKIT
+    assert_equal nil, many_codes.detect {|c|c =~ /[a-zA-Z]{4}/}
   end
   
   def test_code_is_random
