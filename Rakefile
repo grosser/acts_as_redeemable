@@ -1,15 +1,11 @@
 require 'rake'
-require 'rake/testtask'
 require 'rake/rdoctask'
 
-desc 'Default: run unit tests.'
-task :default => :test
-
-desc 'Test the acts_as_redeemable plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
+desc "Run all specs in spec directory"
+task :default do
+  options = "--colour --format progress --loadby --reverse"
+  files = FileList['spec/**/*_spec.rb']
+  system("spec #{options} #{files}")
 end
 
 desc 'Generate documentation for the acts_as_redeemable plugin.'

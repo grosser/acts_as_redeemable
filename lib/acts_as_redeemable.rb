@@ -1,4 +1,6 @@
 require 'md5'
+require 'activerecord'
+
 module Squeejee  #:nodoc:
   module Acts  #:nodoc:
     module Redeemable  #:nodoc:
@@ -93,13 +95,15 @@ module Squeejee  #:nodoc:
 
         # Returns whether or not the redeemable has expired
         def expired?
-          self.expires_at and self.expires_at < Time.now
+          time = respond_to?(:expires_on) ? expires_on : expires_at
+          time and time < Time.now
         end
 
         def setup_new #:nodoc:
           self.code = self.class.generate_unique_code
-          unless self.class.valid_for.nil? or self.expires_at?
-            self.expires_at = self.created_at + self.class.valid_for
+          time = respond_to?(:expires_on) ? expires_on : expires_at
+          unless self.class.valid_for.nil? or time
+            self.expires_on = self.created_at + self.class.valid_for
           end
         end
         
