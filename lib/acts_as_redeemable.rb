@@ -1,4 +1,5 @@
 require 'activerecord'
+require 'readable_random'
 
 module ActsAsRedeemable
   def self.included(base)
@@ -40,7 +41,7 @@ module ActsAsRedeemable
       # Generates an alphanumeric code using an MD5 hash
       # * +code_length+ - number of characters to return
       def generate_code(code_length=6)
-        ActiveSupport::SecureRandom.base64(code_length).first(code_length).downcase
+        ReadableRandom.get(code_length)
       end
 
       # Generates unique code based on +generate_code+ method

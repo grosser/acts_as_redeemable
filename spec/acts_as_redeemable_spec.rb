@@ -36,11 +36,11 @@ describe ActsAsRedeemable do
     end
 
     it "generates a unique code" do
-      ActiveSupport::SecureRandom.should_receive(:base64).and_return 'a'
+      ReadableRandom.should_receive(:get).and_return 'a'
       FreeTodayCoupon.create!(:user_id => 1).code.should == 'a'
 
-      ActiveSupport::SecureRandom.should_receive(:base64).and_return 'a'
-      ActiveSupport::SecureRandom.should_receive(:base64).and_return 'b'
+      ReadableRandom.should_receive(:get).and_return 'a'
+      ReadableRandom.should_receive(:get).and_return 'b'
       FreeTodayCoupon.create!(:user_id => 1).code.should == 'b'
     end
   end
