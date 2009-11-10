@@ -31,7 +31,7 @@ module ActsAsRedeemable
       unless redeemable? # don't let AR call this twice
         cattr_accessor :valid_for
         cattr_accessor :code_length
-        before_create :setup_new
+        before_create :initialize_redeemable
         self.valid_for = options[:valid_for] unless options[:valid_for].nil?
         self.code_length = (options[:code_length].nil? ? 6 : options[:code_length])
       end
@@ -83,12 +83,14 @@ module ActsAsRedeemable
       time and time < Time.now
     end
 
-    def setup_new #:nodoc:
+    def initialize_redeemable
+      # set code
       self.code = self.class.generate_unique_code
-      time = respond_to?(:expires_on) ? expires_on : expires_at
-      unless self.class.valid_for.nil? or time
-        self.expires_on = self.created_at + self.class.valid_for
-      end
+
+      # set expiration
+      field = respond_to?(:expires_on) ? :expires_on : :expires_at
+      return if not self.class.valid_for or send(field)
+      send "#{field}=", self.class.valid_for.from_now
     end
 
     # Callback for business logic to implement after redemption
