@@ -8,10 +8,20 @@ describe ActsAsRedeemable do
 
     after :all do
       FreeTodayCoupon.valid_for = nil
+      FreeTodayCoupon.code_length = 6
     end
 
     it "sets expires_at" do
       FreeTodayCoupon.create!(:user_id => 1).expires_at.should be_close(1.day.from_now, 2)
+    end
+
+    it "generates a code" do
+      FreeTodayCoupon.create!(:user_id => 1).code.length.should == 6
+    end
+
+    it "generates a code of given length" do
+      FreeTodayCoupon.code_length = 3
+      FreeTodayCoupon.generate_unique_code.length.should == 3
     end
   end
 
