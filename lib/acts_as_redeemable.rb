@@ -66,10 +66,9 @@ module ActsAsRedeemable
     # Marks the redeemable redeemed by the given user id
     # * +redeemed_by_id+ - id of redeeming user
     def redeem!(redeemed_by_id)
-      unless self.redeemed? or self.expired?
-        self.update_attributes({:redeemed_by_id => redeemed_by_id, :redeemed_at => Time.now})
-        self.after_redeem
-      end
+      return if redeemed? or expired?
+      update_attributes :redeemed_by_id => redeemed_by_id, :redeemed_at => Time.now
+      after_redeem
     end
 
     # Returns whether or not the redeemable has been redeemed

@@ -2,17 +2,22 @@ require 'spec/spec_helper'
 
 describe ActsAsRedeemable do
   describe :create do
-    before :all do
+    before do
       FreeTodayCoupon.valid_for = 1.day
     end
 
-    after :all do
+    after do
       FreeTodayCoupon.valid_for = nil
       FreeTodayCoupon.code_length = 6
     end
 
     it "sets expires_at" do
       FreeTodayCoupon.create!(:user_id => 1).expires_at.should be_close(1.day.from_now, 2)
+    end
+
+    it "does not set expires_at if valid_for was not set" do
+      FreeTodayCoupon.valid_for = nil
+      FreeTodayCoupon.create!(:user_id => 1).expires_at.should == nil
     end
 
     it "generates a code" do
