@@ -1,15 +1,14 @@
 class <%= migration_name %> < ActiveRecord::Migration
   def self.up
     create_table :<%= table_name %> do |t|
+      t.integer :user_id
+      t.integer :redeemed_by_id, :integer
 
-      t.column :user_id, :integer
-      t.column :code, :string
-      
-      t.column :created_at, :datetime
-      t.column :redeemed_at, :datetime
-      t.column :redeemed_by_id, :integer
+      t.string :code
 
-      t.column :expires_at, :datetime
+      t.timestamps
+      t.timestamp :redeemed_at
+      t.timestamp :expires_at
     end
   end
 
