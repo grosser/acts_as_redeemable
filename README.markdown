@@ -19,17 +19,17 @@ Install
 Usage
 =====
 
-### Optionally generate the model 
+### Generate model and migrations (or do it by hand...)
+    # columns needed: code, user_id, expired_at, redeemed_at, redeemed_by_id
     script/generate redeemable Coupon
     rake db:migrate
 
-### Make your ActiveRecord model act as redeemable.
+### Add act_as_redeemable
     class Coupon < ActiveRecord::Base
       acts_as_redeemable :valid_for => 30.days, :code_length => 8 # optional expiration, code length
     end
 
 ### Redeem!
-
     c = Coupon.new
     c.user_id = 1 # The user who created the coupon
     c.save!
@@ -45,7 +45,7 @@ Authors
 ======
 
 ### Contributors
-  - [cyu](http://github.com/cyu)
+  - [cyu](http://blog.codeeg.com)
   - [Michael Grosser](http://pragmatig.wordpress.com)
 
 Copyright (c) 2008 Squeejee, released under the MIT license
