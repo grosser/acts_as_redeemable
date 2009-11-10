@@ -1,10 +1,10 @@
-require 'md5'
 require 'activerecord'
 
 module ActsAsRedeemable
   def self.included(base)
-    base.extend(ClassMethods)
+    base.extend ClassMethods
   end
+
   # This act provides the capabilities for redeeming and expiring models. Useful for things like
   # coupons, invitations, and special offers.
   #
@@ -40,9 +40,7 @@ module ActsAsRedeemable
       # Generates an alphanumeric code using an MD5 hash
       # * +code_length+ - number of characters to return
       def generate_code(code_length=6)
-        chars = ("a".."z").to_a + ("1".."9").to_a
-        new_code = Array.new(code_length, '').collect{chars[rand(chars.size)]}.join
-        Digest::MD5.hexdigest(new_code)[0..(code_length-1)].upcase
+        ActiveSupport::SecureRandom.base64(code_length).first(code_length).downcase
       end
 
       # Generates unique code based on +generate_code+ method

@@ -1,6 +1,6 @@
 require 'spec/spec_helper'
 
-describe 'ActsAsRedeemable' do
+describe ActsAsRedeemable do
   describe :generate_unique_code do
     it "generates a 6 digit code by default" do
       FreeTodayCoupon.generate_unique_code.length.should == 6
