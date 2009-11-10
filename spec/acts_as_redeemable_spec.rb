@@ -47,5 +47,29 @@ describe ActsAsRedeemable do
       coupon.redeem!(2)
       coupon.should be_redeemed
     end
+
+    it "calls after_redeem" do
+      coupon = FreeTodayCoupon.create!(:user_id => 1)
+      coupon.should_receive(:after_redeem)
+      coupon.redeem!(2)
+    end
+
+    it "does not call after_redeem if it is expired" do
+      coupon = FreeTodayCoupon.create!(:user_id => 1, :expires_at => 1.day.ago)
+      coupon.should_not_receive(:after_redeem)
+      coupon.redeem!(2)
+    end
+
+    it "does not call after_redeem if it is redeemed" do
+      coupon = FreeTodayCoupon.create!(:user_id => 1, :redeemed_at => 1.day.ago)
+      coupon.should_not_receive(:after_redeem)
+      coupon.redeem!(2)
+    end
+
+    it "does set redeemed_at if it is expired" do
+      coupon = FreeTodayCoupon.create!(:user_id => 1, :expires_at => 1.day.ago)
+      coupon.redeem!(2)
+      coupon.redeemed_at.should == nil
+    end
   end
 end
