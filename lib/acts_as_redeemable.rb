@@ -38,16 +38,10 @@ module ActsAsRedeemable
       end
       include InstanceMethods
 
-      # Generates an alphanumeric code using an MD5 hash
-      # * +code_length+ - number of characters to return
-      def generate_code(code_length=6)
-        ReadableRandom.get(code_length)
-      end
-
       # Generates unique code based on +generate_code+ method
       def generate_unique_code
         begin
-          new_code = generate_code(self.code_length)
+          new_code = ReadableRandom.get(self.code_length)
         end until !active_code?(new_code)
         new_code
       end
