@@ -13,7 +13,7 @@ Each redeemable gets a unique code upon creation that can be sent in an email or
 
 Install
 =======
-    sudo gem install ReadableRandom
+    sudo gem install readable_random
     script/plugin install git://github.com/grosser/acts_as_redeemable.git
 
 Usage
