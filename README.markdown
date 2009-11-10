@@ -1,8 +1,19 @@
-Rails plugin that adds redemption capability to a model for items like coupons, invitation codes, etc.  
+### Branch of acts_as_redeemable to:
+ - add tests
+ - remove unused :recipient_id
+ - use [ReadableRandom](http://github.com/grosser/readable_random) to generate codes (readable + non-insulting)
+ - use :expires_at (Rails default for times, still supports :expires_on)
+ - rename from Squeejee::Acts::Redeemable to ActsAsRedeemable
+ - add a nice Readme
+ - refactor
+
+
+Rails plugin that adds redemption capability to a model for items like coupons, invitation codes, etc.
 Each redeemable gets a unique code upon creation that can be sent in an email or printed as a coupon code.
 
 Install
 =======
+    sudo gem install ReadableRandom
     script/plugin install git://github.com/grosser/acts_as_redeemable.git
 
 Usage
