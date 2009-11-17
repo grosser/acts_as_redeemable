@@ -1,12 +1,9 @@
 require 'rake'
 require 'rake/rdoctask'
 
-desc "Run all specs in spec directory"
-task :default do
-  options = "--colour --format progress --loadby --reverse"
-  files = FileList['spec/**/*_spec.rb']
-  system("spec #{options} #{files}")
-end
+task :default => :spec
+require 'spec/rake/spectask'
+Spec::Rake::SpecTask.new {|t| t.spec_opts = ['--color']}
 
 desc 'Generate documentation for the acts_as_redeemable plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
